@@ -1,5 +1,6 @@
 export interface Stat {
 	base_stat: number;
+	effort: number;
 	stat: {
 		name: string;
 		url: string;
@@ -8,6 +9,14 @@ export interface Stat {
 
 export interface Sprites {
 	front_default: string;
+}
+
+export interface GameIndex {
+	game_index: number;
+	version: {
+		name: string;
+		version: string;
+	};
 }
 
 export interface Pokemon {
@@ -19,7 +28,7 @@ export interface Pokemon {
 		name: string;
 		url: string;
 	};
-	base_stats: Stat[];
+	stats: Stat[];
 	sprites: Sprites;
-	games_appeared_in: number;
+	game_indices: GameIndex[];
 }

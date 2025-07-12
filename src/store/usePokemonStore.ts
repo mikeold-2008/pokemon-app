@@ -1,32 +1,28 @@
 import { create } from "zustand";
 import { Pokemon } from "../types/types";
+import { storage } from "../storage/storage";
 
 type Store = {
 	favourites: Pokemon[];
-	addFavourite: (pokemon: Pokemon) => void;
-	removeFavourite: (name: string) => void;
+	setFavourites: (favourites: Pokemon[]) => void;
 	selectedPokemon: Pokemon | null;
 	loading: boolean;
 	error: string | null;
-	fetchPokemon: (name: string) => Promise<void>;
 	searchResult: Pokemon | null;
 	setSelectedPokemon: (pokemon: Pokemon) => void;
+	fetchPokemon: (name: string) => Promise<void>;
+	isFavourite: (pokemon: Pokemon) => Promise<boolean>;
 };
 
-export const usePokemonStore = create<Store>((set) => ({
+export const usePokemonStore = create<Store>((set, get) => ({
 	favourites: [],
-	addFavourite: (pokemon) =>
-		set((state) => ({
-			favourites: [...state.favourites, pokemon],
-		})),
-	removeFavourite: (name) =>
-		set((state) => ({
-			favourites: state.favourites.filter((p) => p.name !== name),
-		})),
+	setFavourites: (favourites: Pokemon[]) => set({ favourites }),
 	selectedPokemon: null,
 	loading: false,
 	error: null,
-	fetchPokemon: async (name) => {
+	searchResult: null,
+	setSelectedPokemon: (pokemon: Pokemon) => set({ selectedPokemon: pokemon }),
+	fetchPokemon: async (name: string) => {
 		set({ loading: true, error: null, searchResult: null });
 		try {
 			const response = await fetch(
@@ -40,6 +36,8 @@ export const usePokemonStore = create<Store>((set) => ({
 			set({ error: err.message, loading: false });
 		}
 	},
-	setSelectedPokemon: (pokemon: Pokemon) => set({ selectedPokemon: pokemon }),
-	searchResult: null,
+	isFavourite: async (pokemon: Pokemon): Promise<boolean> => {
+		let isFavourited = await storage.inFavourites(pokemon);
+		return isFavourited;
+	},
 }));

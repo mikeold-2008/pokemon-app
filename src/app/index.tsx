@@ -3,7 +3,6 @@ import {
 	StyleSheet,
 	TextInput,
 	Button,
-	Text,
 	Image,
 	TouchableOpacity,
 } from "react-native";
@@ -12,6 +11,7 @@ import { useEffect, useState } from "react";
 import { usePokemonStore } from "../store/usePokemonStore";
 import SearchFeedback from "../components/SearchFeedback";
 import { useRouter } from "expo-router";
+import { formatName } from "../utils/utils";
 
 const Index = () => {
 	const [searchTerm, setSearchTerm] = useState<string>("");
@@ -28,7 +28,6 @@ const Index = () => {
 			return;
 		}
 		setSearchFeedback("Searching...");
-
 		await fetchPokemon(searchTerm.toLowerCase());
 	}
 
@@ -77,10 +76,10 @@ const Index = () => {
 					</TouchableOpacity>
 
 					<AppText style={{ fontSize: 20 }}>
-						A wild {searchResult.species.name} has appeared!
+						A wild {formatName(searchResult.species.name)} has appeared!
 					</AppText>
 					<AppText style={styles.ctaText}>
-						Tap on {searchResult.species.name} to learn more.
+						Tap on {formatName(searchResult.species.name)} to learn more.
 					</AppText>
 				</View>
 			) : (
