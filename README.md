@@ -10,6 +10,7 @@ A mobile app built with **React Native**, powered by **Expo Router**, that allow
 
 
 git clone https://github.com/YOUR_USERNAME/pokemon-app.git
+
 cd pokemon-app
 
 
@@ -25,15 +26,15 @@ npx expo start
 
 Then press:
 
-- a to open on Android
-- i to open on iOS
+- a to open on Android 
+- i to open on iOS 
 - Or scan with QR code to run on Expo Go (must download Expo Go app from your phone's app store first)
 
 ---
 
 ## Features
 
-- Browse a list of Pokémon
+- Browse a list of Pokémon 
 - View stats using bar charts
 - Add/remove favourites (persisted with Async Storage)
 - Global state with Zustand
